@@ -93,14 +93,6 @@ namespace Schaeflein.Community.AzureSearch
 			}
 		}
 
-		private static void DeleteHotelsIndexIfExists(SearchServiceClient serviceClient)
-		{
-			if (serviceClient.Indexes.Exists("hotels"))
-			{
-				serviceClient.Indexes.Delete("hotels");
-			}
-		}
-
 		private static void CreateIndex(SearchServiceClient serviceClient)
 		{
 			var definition = new Index()
@@ -108,13 +100,20 @@ namespace Schaeflein.Community.AzureSearch
 				Name = "posts",
 				Fields = new[]
 					{
-						new Field("guid", DataType.String)                   { IsKey = true },
-						new Field("title", DataType.String)                  { IsSearchable = true, IsFilterable = true, IsRetrievable=true },
-						new Field("content", DataType.String)                  { IsSearchable = true },
-						new Field("description", DataType.String)             { IsRetrievable=true },
-						new Field("link", DataType.String)                      { IsRetrievable=true },
-						new Field("category", DataType.Collection(DataType.String))     { IsSearchable = true, IsFilterable = true, IsFacetable = true },
-						new Field("pubDate", DataType.DateTimeOffset)    { IsFilterable = true, IsRetrievable=true, IsSortable = true, IsFacetable = true },
+						new Field("guid", DataType.String)
+								{ IsKey = true },
+						new Field("title", DataType.String)
+								{ IsSearchable = true, IsFilterable = true, IsRetrievable=true },
+						new Field("content", DataType.String)
+								{ IsSearchable = true },
+						new Field("description", DataType.String)
+								{ IsRetrievable=true },
+						new Field("link", DataType.String)
+								{ IsRetrievable=true },
+						new Field("category", DataType.Collection(DataType.String))
+								{ IsSearchable = true, IsFilterable = true, IsFacetable = true },
+						new Field("pubDate", DataType.DateTimeOffset)
+								{ IsFilterable = true, IsRetrievable=true, IsSortable = true, IsFacetable = true },
 					}
 			};
 
@@ -205,23 +204,6 @@ namespace Schaeflein.Community.AzureSearch
 
 			// Wait a while for indexing to complete.
 			Thread.Sleep(2000);
-		}
-
-		private static void SearchDocuments(SearchIndexClient indexClient, string searchText, string filter = null)
-		{
-			//// Execute search based on search text and optional filter
-			//var sp = new SearchParameters();
-
-			//if (!String.IsNullOrEmpty(filter))
-			//{
-			//	sp.Filter = filter;
-			//}
-
-			//DocumentSearchResult<Hotel> response = indexClient.Documents.Search<Hotel>(searchText, sp);
-			//foreach (SearchResult<Hotel> result in response.Results)
-			//{
-			//	Console.WriteLine(result.Document);
-			//}
 		}
 
 
